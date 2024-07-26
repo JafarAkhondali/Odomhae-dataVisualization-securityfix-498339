@@ -22,6 +22,11 @@ svr.listen(SERVER_PORT, function(){
 function checkRequest(req, res) {
   var uri = URL.parse(req.url, true);
   var pathname = uri.pathname;
+    if (path.normalize(decodeURI(uri.pathname)) !== decodeURI(uri.pathname)) {
+        res.statusCode = 403;
+        res.end();
+        return;
+    }
   if (pathname == "/") pathname = FILE_DEFAULT;
   console.log(pathname);
 
